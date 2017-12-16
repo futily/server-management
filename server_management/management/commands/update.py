@@ -53,8 +53,8 @@ class Command(ServerManagementBaseCommand):
                 remote['server'].get('settings_file', 'production'),
             )
 
-            sudo('git config --global user.email "developers@onespacemedia.com"')
-            sudo('git config --global user.name "Onespacemedia Developers"')
+            sudo('git config --global user.email "dan@futily.com.com"')
+            sudo('git config --global user.name "Futily"')
             sudo('git config --global rebase.autoStash true')
 
             sudo('git fetch')
@@ -86,14 +86,7 @@ class Command(ServerManagementBaseCommand):
             if venv_folder.return_code > 0:
                 print('Creating venv for this commit hash')
 
-                # Check if we have PyPy
-                with settings(warn_only=True):
-                    pypy = run('test -x /usr/bin/pypy')
-
-                if pypy.return_code == 0:
-                    sudo(f'virtualenv -p /usr/bin/pypy {new_venv}')
-                else:
-                    sudo(f'virtualenv -p python{python_version} {new_venv}')
+                sudo(f'virtualenv -p python{python_version} {new_venv}')
 
                 with virtualenv(new_venv), shell_env(DJANGO_SETTINGS_MODULE=settings_module):
                     sudo('[[ -e requirements.txt ]] && pip install -r requirements.txt')
@@ -119,7 +112,7 @@ class Command(ServerManagementBaseCommand):
         sudo(f'rm -rf /var/www/{project_folder}/.venv')
         sudo(f'ln -sf {new_venv} /var/www/{project_folder}/.venv')
         sudo(f'rm -rf {old_venv}')
-        sudo(f'supervisorctl signal HUP {project_folder}')
+        sudo(f'supervisorctl restart {project_folder}')
 
         # Register the release with Opbeat.
         if 'opbeat' in config and config['opbeat']['app_id'] and config['opbeat']['secret_token']:

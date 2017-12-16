@@ -62,7 +62,7 @@ class Command(ServerManagementBaseCommand):
             },
             {
                 'title': 'Run certbot',
-                'command': 'certbot certonly --standalone -n --agree-tos --email developers@onespacemedia.com --cert-name {} --domains {}'.format(
+                'command': 'certbot certonly --standalone -n --agree-tos --email dan@futily.com --cert-name {} --domains {}'.format(
                     fallback_domain_name,
                     ','.join(setup_ssl_for)
                 ),

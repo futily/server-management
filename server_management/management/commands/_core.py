@@ -44,7 +44,7 @@ class ServerManagementBaseCommand(BaseCommand):  # pylint: disable=abstract-meth
 # of it all, it could potentially be moved into it's own method and called from
 # this one.
 
-def load_config(env, remote=None, config_user='deploy', debug=False):  # pylint: disable=too-complex,too-many-branches,too-many-statements
+def load_config(env, remote=None, config_user='deploy', debug=True):  # pylint: disable=too-complex,too-many-branches,too-many-statements
     env['sudo_prefix'] += '-H '
 
     # Load the json file
